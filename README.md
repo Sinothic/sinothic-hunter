@@ -29,3 +29,7 @@ This tool tracks recent sales from Shopify e-commerce.
 ## How to use
 
 Just paste the URL of a Shopify store and click **Consultar**, then a list of recent sales will be displayed. If you want to track the next sales, click **Iniciar Monitoramento** and the next sales will be displayed.
+
+## Demonstration
+
+https://glittery-raindrop-d0e928.netlify.app/
