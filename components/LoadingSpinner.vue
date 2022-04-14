@@ -37,6 +37,7 @@ export default {
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 99999999;
 }
 .sk-chase {
   width: 40px;
