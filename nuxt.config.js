@@ -45,8 +45,32 @@ export default {
     '@nuxtjs/axios',
     'vue-sweetalert2/nuxt',
     '@nuxtjs/dotenv',
+    '@nuxtjs/auth-next',
   ],
-
+  // Auth module options
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: '/',
+    },
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          required: true,
+          type: false,
+        },
+        endpoints: {
+          login: { url: '/api/auth/login', method: 'post' },
+        },
+      },
+    },
+  },
+  router: {
+    middleware: ['auth'],
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308

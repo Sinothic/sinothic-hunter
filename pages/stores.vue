@@ -103,11 +103,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-declare module 'vue/types/vue' {
-  interface Vue {
-    $swal: any
-  }
-}
+
 export default Vue.extend({
   name: 'StorePage',
   data() {
