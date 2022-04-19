@@ -77,8 +77,8 @@ export default {
   data() {
     return {
       login: {
-        username: 'sinothic',
-        password: 'aoaoaoao',
+        username: '',
+        password: '',
       },
     }
   },
