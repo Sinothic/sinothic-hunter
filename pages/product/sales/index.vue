@@ -124,7 +124,7 @@ export default Vue.extend({
       }
       this.pagination.current_page--
       await this.$nextTick()
-      this.$fetch()
+      await this.$fetch()
     },
     async handleClickNext() {
       if (this.pagination.current_page == this.pagination.last_page) {
@@ -141,12 +141,15 @@ export default Vue.extend({
       this.$fetch()
     },
   },
-  mounted() {},
   async fetch() {
     const { id } = this.$route.params
+    this.$nuxt.$loading.start()
     this.products = await this.$axios
       .$get(`/products/sales/page/${this.pagination.current_page}`)
       .then((response: any) => response)
+      .finally(() => {
+        this.$nuxt.$loading.finish()
+      })
   },
 })
 </script>
