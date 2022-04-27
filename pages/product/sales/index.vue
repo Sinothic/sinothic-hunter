@@ -1,6 +1,13 @@
 <template>
   <div class="store-sales w-full lg:max-w-7xl my-5 mx-auto">
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <Pagination
+        :pages="[pagination.current_page]"
+        :current-page="pagination.current_page"
+        @change-page="handleChangePage"
+        @click-next="handleClickNext"
+        @click-previous="handleClickPrevious"
+      />
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead
           class="
@@ -81,13 +88,21 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+type ChangePageObject = {
+  page: Number
+}
 export default {
   name: 'ProductSales',
   data() {
     return {
       products: [],
       store: {},
+      pagination: {
+        current_page: 1,
+        pages: [1, 2, 3, 4, 5],
+        last_page: 5,
+      },
     }
   },
   filters: {
@@ -97,16 +112,39 @@ export default {
       return 'R$ ' + value
     },
   },
-  methods: {},
-  mounted() {
-    // this.$fetch()
-    // this.getStoreInformation()
+  methods: {
+    handleChangePage(payload: ChangePageObject) {
+      this.pagination.current_page = payload.page
+    },
+    async handleClickPrevious() {
+      if (this.pagination.current_page == 1) {
+        return
+      }
+      this.pagination.current_page--
+      await this.$nextTick()
+      this.$fetch()
+    },
+    async handleClickNext() {
+      if (this.pagination.current_page == this.pagination.last_page) {
+        this.pagination.pages.push(
+          this.pagination.pages[this.pagination.current_page - 1] + 1
+        )
+
+        this.pagination.last_page =
+          this.pagination.pages[this.pagination.current_page - 1] + 1
+      }
+
+      this.pagination.current_page++
+      await this.$nextTick()
+      this.$fetch()
+    },
   },
+  mounted() {},
   async fetch() {
     const { id } = this.$route.params
     this.products = await this.$axios
-      .$get(`/products/sales`)
-      .then((response) => response)
+      .$get(`/products/sales/page/${this.pagination.current_page}`)
+      .then((response: any) => response)
   },
 }
 </script>
