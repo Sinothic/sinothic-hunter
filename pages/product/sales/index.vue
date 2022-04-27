@@ -89,10 +89,12 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue'
+
 type ChangePageObject = {
-  page: Number
+  page: number
 }
-export default {
+export default Vue.extend({
   name: 'ProductSales',
   data() {
     return {
@@ -106,7 +108,7 @@ export default {
     }
   },
   filters: {
-    formatDBtoReal: function (value) {
+    formatDBtoReal: function (value: any) {
       let val = (value / 1).toFixed(2).replace('.', ',')
       value = val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
       return 'R$ ' + value
@@ -146,7 +148,7 @@ export default {
       .$get(`/products/sales/page/${this.pagination.current_page}`)
       .then((response: any) => response)
   },
-}
+})
 </script>
 
 <style>
